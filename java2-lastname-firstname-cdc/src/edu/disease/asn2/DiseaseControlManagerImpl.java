@@ -6,7 +6,7 @@ import edu.disease.asn1.Exposure;
 
 public class DiseaseControlManagerImpl implements DiseaseControlManager{
 	int maxDiseases,maxPatients;
-	int diseaseCount=0, patientCount=0;
+	int diseaseCount=0,patientCount=0;
 	public DiseaseControlManagerImpl(int maxDiseases,int maxPatients) {
 		if(maxDiseases <=0 && maxPatients <=0) {
 			try {
@@ -31,10 +31,10 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager{
 			}
 		}
 		if(isInfectious) {
-			disease=new InfectiousDisease(UUID.randomUUID(),diseaseName);
+			disease=new InfectiousDisease(null,diseaseName);
 		}
 		else {
-			disease=new NonInfectiousDisease(UUID.randomUUID(), diseaseName);
+			disease=new NonInfectiousDisease(null, diseaseName);
 		}
 		if(disease!=null) {
 			diseases[diseaseCount]=disease;
@@ -52,7 +52,7 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager{
 		}
 		if(disease1==null) {
 			try {
-			throw new NullPointerException("there is no such disease is in that id");
+			throw new NullPointerException();
 			}catch(NullPointerException e) {
 				e.printStackTrace();
 			}
@@ -92,40 +92,37 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager{
 			}
 		}
 		return p1;
-		
 	}
 
 	public void addDiseaseToPatient(UUID patientId, UUID diseaseId) {
 		Patient pat=null;
-	for(int i=0;i<patient.length;i++) {
-		if(patientId==patient[i].patientId) {
-			pat=patient[i];
+		for(int i=0;i<patient.length;i++) {
+			if(patientId==patient[i].patientId) {
+				pat=patient[i];
+			}
 		}
-	}
-	if(pat==null) {
-		try {
-		throw new NullPointerException("No such patient is there in that id");
+		if(pat==null) {
+			try {
+			throw new NullPointerException("No such patient is there in that id");
+			}
+			catch(NullPointerException e) {
+				e.printStackTrace();
+			}
 		}
-		catch(NullPointerException e) {
-			e.printStackTrace();
+		Disease dis=null;
+		for(int i=0;i<diseases.length;i++) {
+			if(diseaseId==diseases[i].diseasesId) {
+				dis=diseases[i];
+			}
 		}
-	}
-	Disease dis=null;
-	for(int i=0;i<diseases.length;i++) {
-		if(diseaseId==diseases[i].diseasesId) {
-			dis=diseases[i];
+		if(dis==null) {
+			try {
+			throw new NullPointerException("No such disease is there in that id");
+			}catch(NullPointerException e) {
+				e.printStackTrace();
+			}
 		}
-	}
-	if(dis==null) {
-		try {
-		throw new NullPointerException("No such disease is there in that id");
-		}catch(NullPointerException e) {
-			e.printStackTrace();
-		}
-	}
-	pat.addDiseaseId(diseaseId);
-	
-		
+		pat.addDiseaseId(diseaseId);
 	}
 
 	public void addExposureToPatient(UUID patientId, Exposure exposure) {
@@ -143,8 +140,7 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager{
 				e.printStackTrace();
 			}
 		}
-		
+
 		patie.addExposure(exposure);
-		
 	}
 }
