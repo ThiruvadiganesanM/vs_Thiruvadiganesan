@@ -11,13 +11,13 @@ public class ExposureTest {
 	private Exposure exposure;
 	
 	@Before
+	
 	public void setUp() {
 		final UUID uuid = UUID.randomUUID();
 		exposure = new Exposure(uuid);
 		exposure.setDateTime(LocalDateTime.now());
 		exposure.setExposureType("D");
 	}
-	
 	@Test
 	public void testExposurePostiveScenario()
 	{
@@ -30,27 +30,31 @@ public class ExposureTest {
 		assertTrue(exposure.equals(exposureObj));
 		assertTrue(exposure.equals(exposure));
 		assertFalse(exposure.equals(null));
+		final Exposure exposureObj1=new Exposure(UUID.randomUUID());
+		assertFalse(exposureObj1.equals(exposure));
+		
 		final Exposure exposureObjEquals = new Exposure(exposure.getPatientId());
 		exposureObjEquals.setExposureType("I");
+		exposureObjEquals.setExposureType("H");
 		exposureObjEquals.setDateTime(exposure.getDateTime());
 		assertTrue(exposure.equals(exposureObjEquals));
-		assertFalse(exposure.equals(null));
+		//assertFalse(exposure.equals(null));
 		exposureObjEquals.setDateTime(null);
 		assertFalse(exposure.equals(exposureObjEquals));
 		exposure.setPatientId(null);
 		exposureObjEquals.setDateTime(exposure.getDateTime());
+		
 		assertFalse(exposure.equals(exposureObjEquals));
 		exposure.setPatientId(null);
 		exposureObjEquals.setDateTime(null);
 		assertFalse(exposure.equals(exposureObjEquals));
-		
 	}
 	
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testException()
 	{
-		exposure.setExposureType(null);
+		exposure.setExposureType("K");
 	}
 	
 }

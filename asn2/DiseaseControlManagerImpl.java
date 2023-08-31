@@ -21,24 +21,21 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager{
 	private Disease[] diseases=new Disease[maxDiseases];
 	private Patient[] patient=new Patient[maxPatients];
 	
+	
 	public Disease addDisease(String diseaseName, boolean isInfectious) {
-		Disease disease;
-		if(diseases.length==diseaseCount) {
-			try {
-			throw new IllegalStateException();
-			}catch(IllegalStateException e){
-				e.printStackTrace();
-			}
+		Disease disease=null;
+		if(disease!=null && diseases.length==diseaseCount) {
+			throw new IllegalStateException("disease list is full");
 		}
-		if(isInfectious) {
-			disease=new InfectiousDisease(null,diseaseName);
+		if(isInfectious==true) {
+			disease=new InfectiousDisease();
 		}
 		else {
-			disease=new NonInfectiousDisease(null, diseaseName);
+			disease=new NonInfectiousDisease();
 		}
 		if(disease!=null) {
-			diseases[diseaseCount]=disease;
-			diseaseCount++;
+			diseases[diseaseCount++]=disease;
+			
 		}
 	return disease;
 	}
@@ -46,7 +43,7 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager{
 	public Disease getDisease(UUID diseaseId) {
 		Disease disease1=null;
 		for(int i=0;i<diseases.length;i++) {
-			if(diseaseId==diseases[i].diseaseId) {
+			if(diseaseId==diseases[i].getDiseaseId()) {
 				disease1=diseases[i];
 			}
 		}

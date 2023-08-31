@@ -2,7 +2,7 @@ package edu.disease.asn3;
 
 import java.util.UUID;
 
-import edu.disease.asn1.Exposure;
+//import edu.disease.asn3.Exposure;
 
 public class DiseaseControlManagerImpl implements DiseaseControlManager {
 	private Disease[] diseases;
@@ -24,20 +24,15 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager {
 	public Disease addDisease(String diseaseName, boolean isInfectious) {
 		Disease disease;
 		if (diseases.length == diseaseCount) {
-			try {
 				throw new IllegalStateException();
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			}
 		}
 		if (isInfectious) {
-			disease = new InfectiousDisease(UUID.randomUUID(), diseaseName);
+			disease = new InfectiousDisease();
 		} else {
-			disease = new NonInfectiousDisease(UUID.randomUUID(), diseaseName);
+			disease = new NonInfectiousDisease();
 		}
 		if (disease != null) {
-			diseases[diseaseCount] = disease;
-			diseaseCount++;
+			diseases[diseaseCount++] = disease;
 		}
 		return disease;
 	}
@@ -45,7 +40,7 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager {
 	public Disease getDisease(UUID diseaseId) {
 		Disease disease1 = null;
 		for (int i = 0; i < diseases.length; i++) {
-			if (diseaseId == diseases[i].diseaseId) {
+			if (diseaseId == diseases[i].getDiseaseId()) {
 				disease1 = diseases[i];
 			}
 		}
@@ -107,7 +102,7 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager {
 		}
 		Disease dis = null;
 		for (int i = 0; i < diseases.length; i++) {
-			if (diseaseId == diseases[i].diseaseId) {
+			if (diseaseId == diseases[i].getDiseaseId()) {
 				dis = diseases[i];
 			}
 		}
@@ -139,13 +134,13 @@ public class DiseaseControlManagerImpl implements DiseaseControlManager {
 		patie.addExposure(exposure);
 	}
 
-	@Override
 	public Disease[] getDiseases() {
 
 		return this.diseases;
 	}
-	@Override
 	public Patient[] getPatient() {
 		return this.patient;
 	}
+
+	
 }

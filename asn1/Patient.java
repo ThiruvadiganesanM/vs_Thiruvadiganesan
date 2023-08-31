@@ -18,11 +18,7 @@ UUID []diseaseIds;
 	 */
 	public Patient(int maxDiseases, int maxExposures) {
 		if (maxDiseases <= 0 && maxExposures <= 0) {
-			try {
-				throw new IllegalArgumentException();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			}
+			throw new IllegalArgumentException();
 		}
 
 		exposures = new Exposure[maxExposures];
@@ -31,14 +27,11 @@ UUID []diseaseIds;
 
 	public void addDiseaseId(UUID diseaseid) {
 		if (count == diseaseIds.length) {
-			try {
-				throw new IndexOutOfBoundsException();
-			} catch (IndexOutOfBoundsException e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException();
+
 		}
-		diseaseIds[count] = diseaseid;
-		count++;
+		diseaseIds[count++] = diseaseid;
+		
 	}
 
 	public UUID getPatientId() {
@@ -67,14 +60,11 @@ UUID []diseaseIds;
 
 	public void addExposure(Exposure exp) {
 		if (count1 == exposures.length) {
-			try {
-				throw new IndexOutOfBoundsException();
-			} catch (IndexOutOfBoundsException e) {
-				e.printStackTrace();
-			}
+			throw new IndexOutOfBoundsException();
+
 		}
-		exposures[count1] = exp;
-		count++;
+		exposures[count1++] = exp;
+	
 	}
 
 	public UUID[] getDiseaseIds() {

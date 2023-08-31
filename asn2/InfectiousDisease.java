@@ -8,12 +8,9 @@ public class InfectiousDisease extends Disease{
 	public String[] getExamples() {
 		return disease;
 	}
-	public InfectiousDisease(UUID diseaseId,String name) {
-		super(diseaseId,name);
-	}
 	public InfectiousDisease() {
 		
 	}
 
-}
 
+}

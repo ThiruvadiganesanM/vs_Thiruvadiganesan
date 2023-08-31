@@ -1,14 +1,17 @@
-package edu.disease.asn1;
+package edu.disease.asn6;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.disease.asn3.Exposure;
 public class PatientTest {
 	private Patient patient;
 	
@@ -24,9 +27,9 @@ public class PatientTest {
 		exposure = new Exposure(uuid);
 		exposure.setDateTime(LocalDateTime.now());
 		exposure.setExposureType("D");
-		patient = new Patient(1,1);
-		patient.setDiseaseIds(new UUID[] {UUID.randomUUID(), UUID.randomUUID()});
-		patient.setExposures(new Exposure[] {exposure});
+		patient = new Patient();
+		patient.setDiseaseIds(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()));
+		patient.setExposures(Arrays.asList(exposure) 	);
 		patient.setFirstName(FIRST_NAME);
 		patient.setLastName(LAST_NAME);
 		patient.setPatientId(uuid);
@@ -51,7 +54,7 @@ public class PatientTest {
 		assertTrue(patient.equals(patientObj));
 		assertTrue(patient.equals(patient));
 		assertFalse(patient.equals(null));
-		final Patient patientObjEquals = new Patient(1,1);
+		final Patient patientObjEquals = new Patient();
 		patientObjEquals.setPatientId(patient.getPatientId());
 		assertFalse(patient.equals(patientObjEquals));
 		assertFalse(patient.equals(null));
@@ -63,13 +66,13 @@ public class PatientTest {
 	@Test
 	public void testAddDisease()
 	{
-	    final Patient patientTest = new Patient(3,3);
+	    final Patient patientTest = new Patient();
 	    patientTest.addDiseaseId(UUID.randomUUID());
 	    patientTest.addDiseaseId(UUID.randomUUID());
 	    patientTest.addDiseaseId(UUID.randomUUID());
 	 assertThrows(IndexOutOfBoundsException.class, ()->patientTest.addDiseaseId(UUID.randomUUID()))   ;
-	    System.out.println(patientTest.getDiseaseIds()[0]);
-		assertEquals(3, patientTest.getDiseaseIds().length);
+	    System.out.println(patientTest.getDiseaseIds().get(0));
+		assertEquals(3, patientTest.getDiseaseIds().size());
 	}
 	
 	
@@ -77,12 +80,12 @@ public class PatientTest {
 	@Test
 	public void testAddExposure()
 	{
-	    final Patient patientTest = new Patient(3,3);
+	    final Patient patientTest = new Patient();
 	    patientTest.addExposure(exposure);
 	    patientTest.addExposure(exposure);
 	    patientTest.addExposure(exposure);
-	    System.out.println(patientTest.getExposures()[0]);
-		assertEquals(3, patientTest.getExposures().length);
+	    System.out.println(patientTest.getExposures().get(0));
+		assertEquals(3, patientTest.getExposures().size());
 	}
 	
 	
@@ -98,10 +101,4 @@ public class PatientTest {
 		patient.addExposure(exposure);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testExceptionPatient()
-	{
-		Patient patientTest = new Patient(-8, -9);
-		
-	}
 }

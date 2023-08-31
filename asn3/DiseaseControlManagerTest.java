@@ -1,32 +1,24 @@
-package edu.disease.asn2;
+package edu.disease.asn3;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.UUID;
+
+import org.junit.Assert;
 import org.junit.Test;
 
-import edu.disease.asn1.Exposure;
+import edu.disease.asn3.Exposure;
 public class DiseaseControlManagerTest {
 	//Test cases for new methods added in DiseaseControlManager
 	
-		@Test		//(expected = IllegalStateException.class)
+		@Test(expected = IllegalStateException.class)
 		public void testAddDisease1() {
 			DiseaseControlManager dcm=new DiseaseControlManagerImpl(2,2);
 			dcm.addDisease("ds1", true);
 			dcm.addDisease("dcm2", false);
-			//dcm.addDisease("dc3", true);	
+			dcm.addDisease("dc3", true);	
 		}
-		
-//		@Test
-//		public void testAddDisease2() {
-//			
-//			DiseaseControlManager dcm1=new DiseaseControlManagerImpl(2,2);
-//			dcm1.addDisease("corona", true);
-//			dcm1.addDisease("dengu", false);
-//			assertThrows(IllegalStateException.class, ()->{dcm1.addDisease("dengu", false);});
-//		}
 		
 		@Test
 		public void testGetDiseaseForNull() {
@@ -134,6 +126,11 @@ public class DiseaseControlManagerTest {
 			DiseaseControlManager dcm=new DiseaseControlManagerImpl(1,1);
 			dcm.getDisease(UUID.randomUUID());
 		}
+		@Test
+		public void getDiseaseTest2() {
+			DiseaseControlManager dcm=new DiseaseControlManagerImpl(1,1);
+			assertThrows(NullPointerException.class, ()->dcm.getDisease(UUID.randomUUID()));
+		}
 		
 		
 		@Test(expected=IllegalArgumentException.class)
@@ -182,6 +179,19 @@ public class DiseaseControlManagerTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void testConstructor() {
 			DiseaseControlManager dcm=new DiseaseControlManagerImpl(0,0);
+		}
+		@Test
+		public void testGetDiseases() {
+			DiseaseControlManagerImpl dc=new DiseaseControlManagerImpl(5,5);
+			assertNotNull(dc.getDiseases());
+		}
+		
+		public void testGetPatient() {
+			
+			DiseaseControlManagerImpl dc=new DiseaseControlManagerImpl(1,2);
+			Patient p1 = new Patient(1,2);
+			dc.addPatient("ganesh", "innocent", 2, 3);
+			assertNotNull(dc.getPatient());
 		}
 	
 }
